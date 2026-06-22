@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 
 export default function FloatingContact() {
     const [isOpen, setIsOpen] = useState(false);
+    const location = useLocation();
+
+    if (location.pathname === '/admin') {
+        return null;
+    }
 
     return (
         <div className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-[100] flex flex-col items-center gap-3">

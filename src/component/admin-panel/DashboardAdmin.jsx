@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
-import { Mail, Target, CalendarDays, Search, RefreshCcw, Eye, Trash2, X } from 'lucide-react';
+import { Mail, Target, CalendarDays, Search, RefreshCcw, Eye, Trash2, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 
 export default function DashboardAdmin() {
@@ -11,6 +11,15 @@ export default function DashboardAdmin() {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedMessage, setSelectedMessage] = useState(null);
+    
+    // Pagination states
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+
+    // Reset pagination when tab or search changes
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [activeTab, searchTerm]);
 
     useEffect(() => {
         fetchData();
@@ -66,6 +75,15 @@ export default function DashboardAdmin() {
         `${d.companyName} ${d.firstName} ${d.lastName} ${d.email} ${d.phone}`.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    // Pagination Logic
+    const activeData = activeTab === 'contacts' ? filteredContacts : filteredDemos;
+    const totalPages = Math.max(1, Math.ceil(activeData.length / itemsPerPage));
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    
+    const currentContacts = filteredContacts.slice(indexOfFirstItem, indexOfLastItem);
+    const currentDemos = filteredDemos.slice(indexOfFirstItem, indexOfLastItem);
+
     const stats = [
         { label: 'Total Contacts', value: contacts.length, icon: <Mail size={24} color="#ff4810" />, color: '#ff4810' },
         { label: 'Demo Requests', value: demos.length, icon: <Target size={24} color="#143d25" />, color: '#143d25' },
@@ -89,7 +107,7 @@ export default function DashboardAdmin() {
                         { id: 'contacts', label: 'Contact Messages', icon: <Mail size={20} /> },
                         { id: 'demos', label: 'Demo Requests', icon: <Target size={20} /> },
                     ].map(tab => (
-                        <button key={tab.id} onClick={() => { setActiveTab(tab.id); setSearchTerm(''); }}
+                        <button key={tab.id} onClick={() => setActiveTab(tab.id)}
                             className={`admin-nav-btn flex items-center gap-3 w-full px-4 py-3.5 mb-1 rounded-xl border-none cursor-pointer text-sm font-semibold ${activeTab === tab.id ? 'active' : 'inactive'}`}
                         >
                             <span>{tab.icon}</span>
@@ -149,7 +167,7 @@ export default function DashboardAdmin() {
                     ))}
                 </div>
 
-                {/* Table */}
+                {/* Table Area */}
                 {loading ? (
                     <div className="text-center py-20 text-[var(--text-secondary)] text-base font-semibold flex flex-col items-center">
                         <RefreshCcw size={40} className="animate-spin opacity-50 mb-4 text-[var(--primary-color)]" />
@@ -159,7 +177,7 @@ export default function DashboardAdmin() {
                     <motion.div
                         initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: 0.3 }}
-                        className="bg-white rounded-2xl border border-[var(--border-color)] overflow-hidden shadow-sm"
+                        className="bg-white rounded-2xl border border-[var(--border-color)] overflow-hidden shadow-sm flex flex-col"
                     >
                         <div className="overflow-x-auto">
                             {activeTab === 'contacts' ? (
@@ -172,11 +190,11 @@ export default function DashboardAdmin() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {filteredContacts.length === 0 ? (
+                                        {currentContacts.length === 0 ? (
                                             <tr><td colSpan={7} className="text-center py-12 text-[var(--text-secondary)] text-sm">No contacts found.</td></tr>
-                                        ) : filteredContacts.map((c, i) => (
+                                        ) : currentContacts.map((c, i) => (
                                             <tr key={c._id} className="admin-table-row cursor-default">
-                                                <td className="py-3.5 px-5 text-[13px] text-[var(--text-secondary)] font-semibold">{i + 1}</td>
+                                                <td className="py-3.5 px-5 text-[13px] text-[var(--text-secondary)] font-semibold">{indexOfFirstItem + i + 1}</td>
                                                 <td className="py-3.5 px-5 text-sm font-semibold text-[var(--primary-color)]">{c.firstName} {c.lastName}</td>
                                                 <td className="py-3.5 px-5 text-[13px] text-[var(--text-secondary)]">{c.email}</td>
                                                 <td className="py-3.5 px-5 text-[13px] text-[var(--text-secondary)]">{c.phone}</td>
@@ -206,11 +224,11 @@ export default function DashboardAdmin() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {filteredDemos.length === 0 ? (
+                                        {currentDemos.length === 0 ? (
                                             <tr><td colSpan={8} className="text-center py-12 text-[var(--text-secondary)] text-sm">No demo requests found.</td></tr>
-                                        ) : filteredDemos.map((d, i) => (
+                                        ) : currentDemos.map((d, i) => (
                                             <tr key={d._id} className="admin-table-row cursor-default">
-                                                <td className="py-3.5 px-5 text-[13px] text-[var(--text-secondary)] font-semibold">{i + 1}</td>
+                                                <td className="py-3.5 px-5 text-[13px] text-[var(--text-secondary)] font-semibold">{indexOfFirstItem + i + 1}</td>
                                                 <td className="py-3.5 px-5 text-sm font-bold text-[var(--primary-color)]">{d.companyName}</td>
                                                 <td className="py-3.5 px-5 text-sm font-semibold text-[var(--primary-color)]">{d.firstName} {d.lastName}</td>
                                                 <td className="py-3.5 px-5 text-[13px] text-[var(--text-secondary)]">{d.email}</td>
@@ -230,6 +248,32 @@ export default function DashboardAdmin() {
                                 </table>
                             )}
                         </div>
+
+                        {/* Pagination Controls */}
+                        {activeData.length > 0 && (
+                            <div className="flex justify-between items-center px-6 py-4 border-t border-[var(--border-color)] bg-white mt-auto">
+                                <p className="text-[13px] text-[var(--text-secondary)] font-medium m-0">
+                                    Showing <span className="font-bold text-[var(--primary-color)]">{indexOfFirstItem + 1}</span> to <span className="font-bold text-[var(--primary-color)]">{Math.min(indexOfLastItem, activeData.length)}</span> of <span className="font-bold text-[var(--primary-color)]">{activeData.length}</span> entries
+                                </p>
+                                <div className="flex items-center gap-2">
+                                    <button 
+                                        onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                                        disabled={currentPage === 1}
+                                        className="p-1.5 rounded-lg border border-[var(--border-color)] hover:bg-[var(--bg-light)] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition-colors text-[var(--primary-color)]"
+                                    ><ChevronLeft size={18} /></button>
+                                    
+                                    <span className="text-[13px] font-bold text-[var(--primary-color)] min-w-[30px] text-center bg-[var(--bg-light)] py-1 px-3 rounded-md">
+                                        {currentPage} / {totalPages}
+                                    </span>
+                                    
+                                    <button 
+                                        onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                                        disabled={currentPage === totalPages}
+                                        className="p-1.5 rounded-lg border border-[var(--border-color)] hover:bg-[var(--bg-light)] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition-colors text-[var(--primary-color)]"
+                                    ><ChevronRight size={18} /></button>
+                                </div>
+                            </div>
+                        )}
                     </motion.div>
                 )}
             </main>
