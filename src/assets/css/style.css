@@ -195,3 +195,52 @@ a {
         opacity: 1 !important;
     }
 }
+
+/* Admin Dashboard Custom Vanilla CSS */
+.admin-sidebar {
+    background: linear-gradient(180deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+}
+
+.admin-nav-btn {
+    transition: all 0.2s ease-in-out;
+}
+
+.admin-nav-btn.active {
+    background: rgba(255, 72, 16, 0.15);
+    color: var(--secondary-light);
+}
+
+.admin-nav-btn.inactive {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.admin-nav-btn.inactive:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.admin-refresh-btn {
+    transition: all 0.2s ease-in-out;
+}
+
+.admin-refresh-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.admin-table-row {
+    transition: background 0.15s ease-in-out;
+    border-bottom: 1px solid var(--bg-light);
+}
+
+.admin-table-row:hover {
+    background: var(--bg-color);
+}
+
+.admin-btn-view {
+    transition: all 0.2s ease-in-out;
+}
+
+.admin-btn-view:hover {
+    background: var(--bg-light);
+}
