@@ -32,11 +32,33 @@ const submitContact = async (req, res) => {
             </div>
         `;
 
-        // Send email asynchronously without blocking the response
+        // Send email asynchronously to the user without blocking the response
         sendEmail({
             email: email,
             subject: "Thank you for contacting Markt POS",
             html: htmlContent
+        });
+
+        // Send notification email asynchronously to the admin
+        const adminHtmlContent = `
+            <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                <h2>New Contact Message Received</h2>
+                <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Phone:</strong> ${phone}</p>
+                <p><strong>Country:</strong> ${country}</p>
+                <br/>
+                <p><strong>Message:</strong></p>
+                <blockquote style="border-left: 4px solid #143d25; padding-left: 15px; font-style: italic; background-color: #f3f1e8; padding: 10px;">
+                    ${message}
+                </blockquote>
+            </div>
+        `;
+
+        sendEmail({
+            email: process.env.EMAIL_USER,
+            subject: `New Contact Request from ${firstName} ${lastName}`,
+            html: adminHtmlContent
         });
 
         res.status(201).json({

@@ -28,11 +28,29 @@ const submitDemo = async (req, res) => {
             </div>
         `;
 
-        // Send email asynchronously without blocking the response
+        // Send email asynchronously to the user without blocking the response
         sendEmail({
             email: email,
             subject: "Your Markt POS Demo Request",
             html: htmlContent
+        });
+
+        // Send notification email asynchronously to the admin
+        const adminHtmlContent = `
+            <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                <h2>New Demo Request Received</h2>
+                <p><strong>Company Name:</strong> ${companyName}</p>
+                <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Phone:</strong> ${phone}</p>
+                <p><strong>Country:</strong> ${country}</p>
+            </div>
+        `;
+
+        sendEmail({
+            email: process.env.EMAIL_USER,
+            subject: `New Demo Request from ${companyName}`,
+            html: adminHtmlContent
         });
 
         res.status(201).json({
