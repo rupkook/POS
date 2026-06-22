@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
-import { Mail, Target, CalendarDays, Search, RefreshCcw, Eye, Trash2, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Mail, Target, CalendarDays, Search, RefreshCcw, Eye, Trash2, X, ChevronLeft, ChevronRight, Menu } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import SEO from '../SEO';
 
 export default function DashboardAdmin() {
     const [activeTab, setActiveTab] = useState('contacts');
@@ -11,7 +12,8 @@ export default function DashboardAdmin() {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedMessage, setSelectedMessage] = useState(null);
-    
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
     // Pagination states
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
@@ -80,7 +82,7 @@ export default function DashboardAdmin() {
     const totalPages = Math.max(1, Math.ceil(activeData.length / itemsPerPage));
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    
+
     const currentContacts = filteredContacts.slice(indexOfFirstItem, indexOfLastItem);
     const currentDemos = filteredDemos.slice(indexOfFirstItem, indexOfLastItem);
 
@@ -92,14 +94,31 @@ export default function DashboardAdmin() {
 
     return (
         <div className="min-h-screen bg-[var(--bg-color)]">
+            <SEO title="Admin Dashboard" description="Markt POS Admin Dashboard" />
+
+            {/* Mobile Sidebar Overlay */}
+            <AnimatePresence>
+                {isSidebarOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                        onClick={() => setIsSidebarOpen(false)}
+                        className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-sm"
+                    />
+                )}
+            </AnimatePresence>
 
             {/* Sidebar */}
-            <aside className="fixed top-0 left-0 w-[260px] h-screen flex flex-col z-50 admin-sidebar">
-                <div className="px-6 py-7 border-b border-white/10">
-                    <h1 className="text-white text-[22px] font-extrabold m-0 tracking-tight">
-                        <span className="text-[var(--secondary-color)]">Markt</span> POS
-                    </h1>
-                    <p className="text-white/50 text-[11px] mt-1 uppercase tracking-widest font-semibold">Admin Panel</p>
+            <aside className={`fixed top-0 left-0 w-[260px] h-[100%] flex flex-col z-50 admin-sidebar transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
+                <div className="flex justify-between items-center px-6 py-7 border-b border-white/10">
+                    <div>
+                        <h1 className="text-white text-[22px] font-extrabold m-0 tracking-tight">
+                            <span className="text-[var(--secondary-color)]">Markt</span> POS
+                        </h1>
+                        <p className="text-white/50 text-[11px] mt-1 uppercase tracking-widest font-semibold">Admin Panel</p>
+                    </div>
+                    <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-white/50 hover:text-white cursor-pointer">
+                        <X size={20} />
+                    </button>
                 </div>
 
                 <nav className="flex-1 px-3 py-5">
@@ -107,7 +126,7 @@ export default function DashboardAdmin() {
                         { id: 'contacts', label: 'Contact Messages', icon: <Mail size={20} /> },
                         { id: 'demos', label: 'Demo Requests', icon: <Target size={20} /> },
                     ].map(tab => (
-                        <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+                        <button key={tab.id} onClick={() => { setActiveTab(tab.id); setIsSidebarOpen(false); }}
                             className={`admin-nav-btn flex items-center gap-3 w-full px-4 py-3.5 mb-1 rounded-xl border-none cursor-pointer text-sm font-semibold ${activeTab === tab.id ? 'active' : 'inactive'}`}
                         >
                             <span>{tab.icon}</span>
@@ -124,17 +143,22 @@ export default function DashboardAdmin() {
             </aside>
 
             {/* Main Content */}
-            <main className="ml-[260px] py-8 px-10">
+            <main className="ml-0 lg:ml-[260px] py-6 sm:py-8 px-4 sm:px-10 transition-all duration-300">
 
                 {/* Header */}
-                <div className="flex justify-between items-center mb-8">
-                    <div>
-                        <h2 className="text-[28px] font-extrabold text-[var(--primary-color)] m-0 tracking-tight">
-                            {activeTab === 'contacts' ? 'Contact Messages' : 'Demo Requests'}
-                        </h2>
-                        <p className="text-[var(--text-secondary)] text-sm mt-1 font-medium">
-                            {activeTab === 'contacts' ? `${filteredContacts.length} messages received` : `${filteredDemos.length} demo requests`}
-                        </p>
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 mb-8">
+                    <div className="flex items-center gap-3">
+                        <button onClick={() => setIsSidebarOpen(true)} className="lg:hidden p-2 rounded-xl border border-[var(--border-color)] bg-white text-[var(--primary-color)] shadow-sm cursor-pointer">
+                            <Menu size={20} />
+                        </button>
+                        <div>
+                            <h2 className="text-[24px] sm:text-[28px] font-extrabold text-[var(--primary-color)] m-0 tracking-tight leading-tight">
+                                {activeTab === 'contacts' ? 'Contact Messages' : 'Demo Requests'}
+                            </h2>
+                            <p className="text-[var(--text-secondary)] text-sm mt-1 font-medium">
+                                {activeTab === 'contacts' ? `${filteredContacts.length} messages received` : `${filteredDemos.length} demo requests`}
+                            </p>
+                        </div>
                     </div>
                     <div className="relative">
                         <input
@@ -147,7 +171,7 @@ export default function DashboardAdmin() {
                 </div>
 
                 {/* Stats Cards */}
-                <div className="grid grid-cols-3 gap-5 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mb-8">
                     {stats.map((stat, i) => (
                         <motion.div key={i}
                             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -181,7 +205,7 @@ export default function DashboardAdmin() {
                     >
                         <div className="overflow-x-auto">
                             {activeTab === 'contacts' ? (
-                                <table className="w-full border-collapse">
+                                <table className="w-full border-collapse min-w-[1000px]">
                                     <thead>
                                         <tr className="bg-[var(--bg-light)]">
                                             {['#', 'Name', 'Email', 'Phone', 'Country', 'Date', 'Actions'].map(h => (
@@ -215,7 +239,7 @@ export default function DashboardAdmin() {
                                     </tbody>
                                 </table>
                             ) : (
-                                <table className="w-full border-collapse">
+                                <table className="w-full border-collapse min-w-[1000px]">
                                     <thead>
                                         <tr className="bg-[var(--bg-light)]">
                                             {['#', 'Company', 'Name', 'Email', 'Phone', 'Country', 'Date', 'Actions'].map(h => (
@@ -251,22 +275,22 @@ export default function DashboardAdmin() {
 
                         {/* Pagination Controls */}
                         {activeData.length > 0 && (
-                            <div className="flex justify-between items-center px-6 py-4 border-t border-[var(--border-color)] bg-white mt-auto">
+                            <div className="flex justify-between flex-wrap gap-[20px] items-center px-6 py-4 border-t border-[var(--border-color)] bg-white mt-auto">
                                 <p className="text-[13px] text-[var(--text-secondary)] font-medium m-0">
                                     Showing <span className="font-bold text-[var(--primary-color)]">{indexOfFirstItem + 1}</span> to <span className="font-bold text-[var(--primary-color)]">{Math.min(indexOfLastItem, activeData.length)}</span> of <span className="font-bold text-[var(--primary-color)]">{activeData.length}</span> entries
                                 </p>
                                 <div className="flex items-center gap-2">
-                                    <button 
+                                    <button
                                         onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                                         disabled={currentPage === 1}
                                         className="p-1.5 rounded-lg border border-[var(--border-color)] hover:bg-[var(--bg-light)] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition-colors text-[var(--primary-color)]"
                                     ><ChevronLeft size={18} /></button>
-                                    
+
                                     <span className="text-[13px] font-bold text-[var(--primary-color)] min-w-[30px] text-center bg-[var(--bg-light)] py-1 px-3 rounded-md">
                                         {currentPage} / {totalPages}
                                     </span>
-                                    
-                                    <button 
+
+                                    <button
                                         onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                                         disabled={currentPage === totalPages}
                                         className="p-1.5 rounded-lg border border-[var(--border-color)] hover:bg-[var(--bg-light)] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition-colors text-[var(--primary-color)]"
@@ -307,8 +331,10 @@ export default function DashboardAdmin() {
                                 </div>
                                 <div className="pb-2">
                                     <p className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wide m-0 mb-2">Message</p>
-                                    <div className="bg-[var(--bg-color)] rounded-xl py-4 px-5 border border-[var(--border-color)] text-sm leading-relaxed text-[var(--primary-color)] font-medium whitespace-pre-wrap">
-                                        {selectedMessage.message}
+                                    <div className="bg-[var(--bg-color)] rounded-xl py-4 px-5 border border-[var(--border-color)]">
+                                        <div className="text-sm leading-relaxed text-[var(--primary-color)] font-medium whitespace-pre-wrap max-h-[150px] overflow-y-auto overflow-x-hidden break-words pr-2 custom-scrollbar">
+                                            {selectedMessage.message}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

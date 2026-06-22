@@ -3,6 +3,7 @@ import Header from '../component/Header';
 import Footer from '../component/Footer';
 import DemoForm from '../component/DemoForm';
 import { motion } from 'framer-motion';
+import SEO from '../component/SEO';
 
 export default function DemoPage() {
     return (
@@ -13,6 +14,11 @@ export default function DemoPage() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
         >
+            <SEO 
+                title="Request a Demo" 
+                description="Get a free, personalized demo to see how Markt POS can streamline your grocery store operations." 
+                keywords="POS Demo, Markt POS Demo, Point of Sale Trial, Grocery POS Demo"
+            />
             <HeaderTop />
             <Header />
 

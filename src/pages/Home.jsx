@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import SEO from '../component/SEO';
 import HeaderTop from '../component/HeaderTop';
 import Header from '../component/Header';
 import Hero from '../component/Hero';
@@ -22,6 +23,11 @@ export default function Home() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
         >
+            <SEO 
+                title="Home" 
+                description="Markt POS is the leading point of sale system designed specifically for grocery stores, supermarkets, and specialty markets." 
+                keywords="POS, Point of Sale, Grocery Store POS, Retail Software, Markt POS, Cash Register"
+            />
             <HeaderTop />
             <Header />
             <main>

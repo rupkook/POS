@@ -5,8 +5,10 @@ import toast from "react-hot-toast";
 import { isValidPhoneNumber } from "libphonenumber-js";
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function ContactUs() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -91,7 +93,7 @@ export default function ContactUs() {
                 },
             });
             setTimeout(() => {
-                window.location.reload();
+                navigate('/thank-you');
             }, 2000);
             setFormData({
                 firstName: "",

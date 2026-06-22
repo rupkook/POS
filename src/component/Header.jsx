@@ -25,7 +25,11 @@ export default function Header() {
     return (
         <div className="w-full sticky top-0 z-50">
             <header className={`w-full transition-all duration-300  ${scrolled ? 'bg-[var(--bg-color)] shadow-lg border-none' : 'shadow-none bg-[var(--bg-color)] border-b border-[var(--border-color)] '}`}>
-                <div className="main-container py-8">
+                <div className="main-container py-8 flex items-center justify-between">
+                    
+                    <Link to="/" className="text-[26px] font-black tracking-tight flex items-center z-50">
+                        <span className="text-[var(--secondary-color)]">Markt</span>&nbsp;<span className="text-[var(--primary-color)]">POS</span>
+                    </Link>
 
                     {isSpecialPage ? (
                         <div className="flex items-center gap-4">

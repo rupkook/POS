@@ -26,6 +26,10 @@ export default function HeaderBang() {
         <div className="w-full sticky top-0 z-50">
             <header className={`w-full transition-all duration-300  ${scrolled ? 'bg-[var(--bg-color)] shadow-lg border-none' : 'shadow-none bg-[var(--bg-color)] border-b border-[var(--border-color)] '}`}>
                 <div className="main-container h-16 sm:h-20 flex items-center justify-between">
+                    <Link to="/bn" className="text-[26px] font-black tracking-tight flex items-center z-50">
+                        <span className="text-[var(--secondary-color)]">Markt</span>&nbsp;<span className="text-[var(--primary-color)]">POS</span>
+                    </Link>
+
                     <div className="flex items-center gap-3 sm:gap-4">
                         {isSpecialPage ? (
                             <div className="flex items-center gap-4">

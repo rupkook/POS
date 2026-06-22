@@ -1,7 +1,13 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
 
 export default function ContactUsBang() {
+    const navigate = useNavigate();
+    const [phone, setPhone] = useState('');
+
     return (
         <div className="main-container max-w-7xl py-10 sm:py-16 lg:py-20">
             <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">

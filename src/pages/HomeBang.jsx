@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import SEO from '../component/SEO';
 import HeaderTopBang from '../component/HeaderTopBang';
 import HeaderBang from '../component/HeaderBang';
 import HeroBang from '../component/HeroBang';
@@ -22,6 +23,11 @@ export default function HomeBang() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
         >
+            <SEO 
+                title="হোম" 
+                description="Markt POS হলো গ্রোসারি স্টোর, সুপারমার্কেট এবং স্পেশালিটি মার্কেটের জন্য বিশেষভাবে ডিজাইন করা সেরা পয়েন্ট অফ সেল সিস্টেম।" 
+                keywords="পস, পয়েন্ট অফ সেল, গ্রোসারি স্টোর পস, রিটেইল সফটওয়্যার, Markt POS, ক্যাশ রেজিস্টার"
+            />
             <HeaderTopBang />
             <HeaderBang />
             <main>
