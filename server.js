@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const contactRoutes = require("./routes/contactRoutes");
 const demoRoutes = require("./routes/demoRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.get("/", (req, res) => {
     res.send("Backend Running");
 });
 
+app.use("/api/auth", authRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/demo", demoRoutes);
 

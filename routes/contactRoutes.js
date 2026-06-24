@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { protect } = require("../middleware/authMiddleware");
 
 const {
     submitContact,
@@ -8,7 +9,7 @@ const {
 } = require("../controllers/contactControllers");
 
 router.post("/", submitContact);
-router.get("/", getContacts);
-router.delete("/:id", deleteContact);
+router.get("/", protect, getContacts);
+router.delete("/:id", protect, deleteContact);
 
 module.exports = router;
