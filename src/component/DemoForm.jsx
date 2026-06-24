@@ -42,7 +42,7 @@ export default function DemoForm() {
 
     const handlePhoneChange = (value) => {
         setFormData({ ...formData, phone: value || "" });
-        
+
         const errorMsg = validateField("phone", value, formData.country);
         setErrors(prev => ({ ...prev, phone: errorMsg }));
     };
@@ -56,7 +56,7 @@ export default function DemoForm() {
             const fieldToValidate = name === 'country' ? 'phone' : name;
             const valueToValidate = name === 'country' ? formData.phone : value;
             const countryToUse = name === 'country' ? value : formData.country;
-            
+
             setErrors(prev => ({
                 ...prev,
                 [fieldToValidate]: validateField(fieldToValidate, valueToValidate, countryToUse)
@@ -223,11 +223,7 @@ export default function DemoForm() {
                                     />
                                     {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
                                 </div>
-                                <div className="flex items-start gap-3 pt-2">
-                                    <div className="flex items-center h-5">
-                                        <input type="checkbox" defaultChecked className="w-4 h-4 text-[var(--primary-color)] bg-gray-100 border-gray-300 rounded focus:ring-[var(--primary-color)] focus:ring-2 accent-[var(--primary-color)]" />
-                                    </div>
-                                </div>
+
                                 <div className="pt-4">
                                     <button type="submit" disabled={isSubmitting} className="w-full bg-[var(--primary-color)] hover:bg-[var(--primary-dark)] text-white font-bold text-base py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed">
                                         {isSubmitting ? 'Sending...' : 'Get a Demo'}

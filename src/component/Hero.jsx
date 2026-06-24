@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import heroImage from '../assets/images/banner-pos.webp';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChartLine } from '@fortawesome/free-solid-svg-icons';
+
 export default function Hero() {
     const container = {
         hidden: { opacity: 0 },
@@ -87,7 +90,7 @@ export default function Hero() {
                                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                             >
                                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-[var(--secondary-color)]/10 flex items-center justify-center text-[var(--secondary-color)]">
-                                    <i className="fa-solid fa-chart-line text-xl sm:text-2xl"></i>
+                                    <FontAwesomeIcon icon={faChartLine} className="text-xl sm:text-2xl" />
                                 </div>
                                 <div>
                                     <div className="text-xs sm:text-sm font-bold text-[var(--text-secondary)]">Sales Today</div>

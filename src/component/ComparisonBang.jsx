@@ -1,17 +1,21 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faXmark, faChartBar, faCrown, faStore, faStarHalfStroke, faCircleInfo, faArrowRight, faBoxesStacked, faCloud, faHandPointer, faWifi, faCartShopping, faWeightScale, faPrint, faCreditCard, faHeadset, faShieldHalved, faLock, faClock, faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons';
+import { faStar } from '@fortawesome/free-regular-svg-icons';
+
 export default function ComparisonBang() {
     const features = [
-        { name: "ইনভেন্টরি ট্র্যাকিং", icon: "fa-boxes-stacked" },
-        { name: "ক্লাউড-ভিত্তিক সিস্টেম", icon: "fa-cloud" },
-        { name: "টাচ স্ক্রিন পস", icon: "fa-hand-pointer" },
-        { name: "অফলাইন মোড", icon: "fa-wifi" },
-        { name: "ই-কমার্স ইন্টিগ্রেশন", icon: "fa-cart-shopping" },
-        { name: "স্কেল ইন্টিগ্রেশন", icon: "fa-weight-scale" },
-        { name: "লেবেল প্রিন্টিং", icon: "fa-print" },
-        { name: "EBT/SNAP সাপোর্ট", icon: "fa-credit-card" },
-        { name: "২৪/৭ সাপোর্ট", icon: "fa-headset" },
+        { name: "ইনভেন্টরি ট্র্যাকিং", icon: faBoxesStacked },
+        { name: "ক্লাউড-ভিত্তিক সিস্টেম", icon: faCloud },
+        { name: "টাচ স্ক্রিন POS", icon: faHandPointer },
+        { name: "অফলাইন মোড", icon: faWifi },
+        { name: "ই-কমার্স ইন্টিগ্রেশন", icon: faCartShopping },
+        { name: "স্কেল ইন্টিগ্রেশন", icon: faWeightScale },
+        { name: "লেবেল প্রিন্টিং", icon: faPrint },
+        { name: "EBT/SNAP সাপোর্ট", icon: faCreditCard },
+        { name: "২৪/৭ সাপোর্ট", icon: faHeadset },
     ];
 
     const competitors = {
@@ -22,13 +26,13 @@ export default function ComparisonBang() {
 
     const Check = () => (
         <div className="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-green-100 text-green-600 shadow-sm">
-            <i className="fa-solid fa-check text-xs"></i>
+            <FontAwesomeIcon icon={faCheck} className="text-xs" />
         </div>
     );
 
     const Cross = () => (
         <div className="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-red-50 text-red-400">
-            <i className="fa-solid fa-xmark text-xs"></i>
+            <FontAwesomeIcon icon={faXmark} className="text-xs" />
         </div>
     );
 
@@ -39,7 +43,7 @@ export default function ComparisonBang() {
                 <motion.div className="text-center mb-12 sm:mb-16 lg:mb-20"
                     initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--secondary-color)]/10 text-[var(--secondary-color)] text-xs font-bold uppercase tracking-wider mb-4 sm:mb-6">
-                        <i className="fa-solid fa-chart-bar"></i> তুলনা
+                        <FontAwesomeIcon icon={faChartBar} /> তুলনা
                     </div>
                     <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-[var(--primary-color)] mb-3 sm:mb-4">
                         সেরা গ্রোসারি পস কোনটি?
@@ -65,16 +69,16 @@ export default function ComparisonBang() {
                                             <div className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-[80%] h-1 rounded-b-full bg-[var(--secondary-color)]"></div>
                                             <div className="flex flex-col items-center gap-1.5 sm:gap-2">
                                                 <span className="bg-[var(--secondary-color)] text-white text-[8px] sm:text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                                                    <i className="fa-solid fa-crown mr-1 text-white"></i> সেরা পছন্দ
+                                                    <FontAwesomeIcon icon={faCrown} className="mr-1 text-white" /> সেরা পছন্দ
                                                 </span>
                                                 <div className="font-extrabold text-base sm:text-xl text-[var(--primary-color)] flex items-center gap-1.5">
                                                     <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-md bg-[var(--primary-color)] flex items-center justify-center">
-                                                        <i className="fa-solid fa-store text-white text-[8px] sm:text-[10px]"></i>
+                                                        <FontAwesomeIcon icon={faStore} className="text-white text-[8px] sm:text-[10px]" />
                                                     </div>
                                                     MarktPOS
                                                 </div>
                                                 <div className="flex items-center gap-0.5 mt-0.5">
-                                                    {[1, 2, 3, 4, 5].map(s => <i key={s} className="fa-solid fa-star text-yellow-400 text-[8px] sm:text-[10px]"></i>)}
+                                                    {[1, 2, 3, 4, 5].map(s => <FontAwesomeIcon key={s} icon={faStarSolid} className="text-yellow-400 text-[8px] sm:text-[10px]" />)}
                                                     <span className="text-[9px] sm:text-[11px] text-gray-500 ml-1 font-semibold">৪.৯</span>
                                                 </div>
                                             </div>
@@ -83,8 +87,8 @@ export default function ComparisonBang() {
                                             <div className="flex flex-col items-center gap-1.5">
                                                 <div className="font-bold text-sm sm:text-lg text-gray-400">Square</div>
                                                 <div className="flex items-center gap-0.5">
-                                                    {[1, 2, 3, 4].map(s => <i key={s} className="fa-solid fa-star text-gray-300 text-[8px] sm:text-[10px]"></i>)}
-                                                    <i className="fa-regular fa-star text-gray-300 text-[8px] sm:text-[10px]"></i>
+                                                    {[1, 2, 3, 4].map(s => <FontAwesomeIcon key={s} icon={faStarSolid} className="text-gray-300 text-[8px] sm:text-[10px]" />)}
+                                                    <FontAwesomeIcon icon={faStar} className="text-gray-300 text-[8px] sm:text-[10px]" />
                                                     <span className="text-[9px] sm:text-[11px] text-gray-400 ml-1 font-semibold">৪.২</span>
                                                 </div>
                                             </div>
@@ -93,9 +97,9 @@ export default function ComparisonBang() {
                                             <div className="flex flex-col items-center gap-1.5">
                                                 <div className="font-bold text-sm sm:text-lg text-gray-400">Clover</div>
                                                 <div className="flex items-center gap-0.5">
-                                                    {[1, 2, 3].map(s => <i key={s} className="fa-solid fa-star text-gray-300 text-[8px] sm:text-[10px]"></i>)}
-                                                    <i className="fa-solid fa-star-half-stroke text-gray-300 text-[8px] sm:text-[10px]"></i>
-                                                    <i className="fa-regular fa-star text-gray-300 text-[8px] sm:text-[10px]"></i>
+                                                    {[1, 2, 3].map(s => <FontAwesomeIcon key={s} icon={faStarSolid} className="text-gray-300 text-[8px] sm:text-[10px]" />)}
+                                                    <FontAwesomeIcon icon={faStarHalfStroke} className="text-gray-300 text-[8px] sm:text-[10px]" />
+                                                    <FontAwesomeIcon icon={faStar} className="text-gray-300 text-[8px] sm:text-[10px]" />
                                                     <span className="text-[9px] sm:text-[11px] text-gray-400 ml-1 font-semibold">৩.৮</span>
                                                 </div>
                                             </div>
@@ -111,7 +115,7 @@ export default function ComparisonBang() {
                                             <td className="p-3.5 sm:p-5 bg-[var(--bg-light)]">
                                                 <div className="flex items-center gap-2.5 sm:gap-3">
                                                     <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-500 flex-shrink-0">
-                                                        <i className={`fa-solid ${feature.icon} text-[10px] sm:text-xs`}></i>
+                                                        <FontAwesomeIcon icon={feature.icon} className="text-[10px] sm:text-xs" />
                                                     </div>
                                                     <span className="text-xs sm:text-sm font-semibold text-[var(--text-primary)]">{feature.name}</span>
                                                 </div>
@@ -119,7 +123,7 @@ export default function ComparisonBang() {
                                             <td className="p-3.5 sm:p-5 text-center bg-[var(--bg-color)]">
                                                 {competitors.markt[index] ? (
                                                     <div className="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[var(--secondary-color)]/10 text-[var(--secondary-color)] shadow-sm">
-                                                        <i className="fa-solid fa-check text-xs font-bold"></i>
+                                                        <FontAwesomeIcon icon={faCheck} className="text-xs font-bold" />
                                                     </div>
                                                 ) : <Cross />}
                                             </td>
@@ -138,11 +142,11 @@ export default function ComparisonBang() {
                         {/* Bottom CTA bar */}
                         <div className="px-4 sm:px-8 py-4 sm:py-5 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-3 bg-[var(--bg-color)]">
                             <div className="flex items-center gap-2 text-xs sm:text-sm text-[var(--text-secondary)] text-center sm:text-left">
-                                <i className="fa-solid fa-circle-info text-[var(--secondary-color)]"></i>
+                                <FontAwesomeIcon icon={faCircleInfo} className="text-[var(--secondary-color)]" />
                                 <span>MarktPOS হলো <strong className="text-[var(--primary-color)]">একমাত্র গ্রোসারি-নির্দিষ্ট</strong> পস যেটিতে সম্পূর্ণ ফিচার কভারেজ রয়েছে।</span>
                             </div>
                             <button className="bg-[var(--secondary-color)] hover:bg-[var(--secondary-dark)] text-white px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 whitespace-nowrap">
-                                ফ্রি ট্রায়াল শুরু করুন <i className="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
+                                ফ্রি ট্রায়াল শুরু করুন <FontAwesomeIcon icon={faArrowRight} className="ml-1 text-[10px]" />
                             </button>
                         </div>
                     </div>
@@ -152,13 +156,13 @@ export default function ComparisonBang() {
                 <motion.div className="flex flex-wrap justify-center gap-4 sm:gap-8 mt-10 sm:mt-14"
                     initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.3 }}>
                     {[
-                        { icon: "fa-shield-halved", text: "PCI অনুগত" },
-                        { icon: "fa-lock", text: "২৫৬-বিট SSL" },
-                        { icon: "fa-clock", text: "৯৯.৯% আপটাইম" },
-                        { icon: "fa-headset", text: "২৪/৭ সাপোর্ট" },
+                        { icon: faShieldHalved, text: "PCI কমপ্লায়েন্ট" },
+                        { icon: faLock, text: "২৫৬-বিট SSL" },
+                        { icon: faClock, text: "৯৯.৯% আপটাইম" },
+                        { icon: faHeadset, text: "২৪/৭ সাপোর্ট" },
                     ].map((badge, i) => (
                         <div key={i} className="flex items-center gap-2 text-gray-400 text-xs sm:text-sm">
-                            <i className={`fa-solid ${badge.icon} text-[var(--primary-color)]`}></i>
+                            <FontAwesomeIcon icon={badge.icon} className="text-[var(--primary-color)]" />
                             <span className="font-medium">{badge.text}</span>
                         </div>
                     ))}

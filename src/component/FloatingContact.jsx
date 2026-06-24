@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWhatsapp, faFacebookMessenger } from '@fortawesome/free-brands-svg-icons';
+import { faPlus, faCommentDots } from '@fortawesome/free-solid-svg-icons';
+
 export default function FloatingContact() {
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation();
@@ -29,7 +33,7 @@ export default function FloatingContact() {
                             className="w-12 h-12 rounded-full bg-[#25D366] text-white flex items-center justify-center text-2xl shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300"
                             title="Message on WhatsApp"
                         >
-                            <i className="fa-brands fa-whatsapp"></i>
+                            <FontAwesomeIcon icon={faWhatsapp} />
                         </a>
 
                         {/* Messenger */}
@@ -40,7 +44,7 @@ export default function FloatingContact() {
                             className="w-12 h-12 rounded-full bg-[#00B2FF] text-white flex items-center justify-center text-2xl shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300"
                             title="Message on Messenger"
                         >
-                            <i className="fa-brands fa-facebook-messenger"></i>
+                            <FontAwesomeIcon icon={faFacebookMessenger} />
                         </a>
                     </motion.div>
                 )}
@@ -56,7 +60,7 @@ export default function FloatingContact() {
                 }`}
                 title="Contact Us"
             >
-                <i className={`fa-solid ${isOpen ? 'fa-plus' : 'fa-comment-dots'}`}></i>
+                <FontAwesomeIcon icon={isOpen ? faPlus : faCommentDots} />
             </button>
         </div>
     );

@@ -1,6 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLeaf, faQuoteLeft } from '@fortawesome/free-solid-svg-icons';
+
 export default function ExpertBang() {
     return (
         <section className="py-16 sm:py-24 bg-[var(--bg-color)]">
@@ -17,7 +20,7 @@ export default function ExpertBang() {
                             <motion.div className="absolute bottom-4 right-4 sm:bottom-8 sm:right-8 bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-xl flex items-center gap-3"
                                 animate={{ y: [0, -6, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}>
                                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[var(--secondary-color)]/10 flex items-center justify-center text-[var(--secondary-color)] text-base sm:text-xl">
-                                    <i className="fa-solid fa-leaf"></i>
+                                    <FontAwesomeIcon icon={faLeaf} />
                                 </div>
                                 <div>
                                     <div className="font-bold text-sm sm:text-base text-[var(--primary-color)]">২০+ বছর</div>
@@ -27,7 +30,7 @@ export default function ExpertBang() {
                         </div>
                     </div>
                     <div className="w-full lg:w-1/2 text-center lg:text-left">
-                        <i className="fa-solid fa-quote-left text-3xl sm:text-5xl text-[var(--secondary-color)]/20 mb-4 sm:mb-6"></i>
+                        <FontAwesomeIcon icon={faQuoteLeft} className="text-3xl sm:text-5xl text-[var(--secondary-color)]/20 mb-4 sm:mb-6" />
                         <p className="text-base sm:text-xl md:text-2xl text-[var(--primary-color)] font-medium leading-relaxed mb-6 sm:mb-8">
                             "আমি Markt POS তৈরি করেছি কারণ আমি এমন সফটওয়্যার ব্যবহার করতে ক্লান্ত ছিলাম যা গ্রোসারি স্টোরের জন্য তৈরি নয়। এটি ব্যবহার শুরু করার পর, আমাদের চেকআউটের সময় ৩০% কমেছে এবং ইনভেন্টরি পুরোপুরি সিঙ্ক হয়ে যাচ্ছে।"
                         </p>

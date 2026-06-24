@@ -1,6 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
+
 export default function Testimonials() {
     const cards = [
         { name: "The Market & Produce", location: "Seattle, WA", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800" },
@@ -38,7 +41,7 @@ export default function Testimonials() {
                                 <img src={card.image} alt={card.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 sm:w-16 sm:h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-[var(--secondary-color)]">
-                                    <i className="fa-solid fa-play text-white text-base sm:text-xl ml-0.5 sm:ml-1"></i>
+                                    <FontAwesomeIcon icon={faPlay} className="text-white text-base sm:text-xl ml-0.5 sm:ml-1" />
                                 </div>
                                 <div className="absolute bottom-0 left-0 w-full p-5 sm:p-8">
                                     <h3 className="text-base sm:text-xl font-bold text-white mb-1">{card.name}</h3>

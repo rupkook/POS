@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStore, faBoxesStacked, faDesktop, faCartShopping, faUsers } from '@fortawesome/free-solid-svg-icons';
+
 export default function Features() {
     const [activeTab, setActiveTab] = useState(0);
 
     const features = [
-        { title: "Inventory management", description: "Track stock levels across all your locations in real-time. Automatically generate purchase orders when items run low.", image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=800", icon: "fa-boxes-stacked" },
-        { title: "Hardware integration", description: "Seamlessly connect with barcode scanners, receipt printers, cash drawers, and weight scales.", image: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&q=80&w=800", icon: "fa-desktop" },
-        { title: "Online ordering", description: "Launch your online grocery store in minutes. Sync your in-store and online inventory automatically.", image: "https://images.unsplash.com/photo-1588820462211-133cd34b12aa?auto=format&fit=crop&q=80&w=800", icon: "fa-cart-shopping" },
-        { title: "Employee management", description: "Track employee hours, set role-based permissions, and monitor cashier performance.", image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800", icon: "fa-users" },
+        { title: "Inventory management", description: "Track stock levels across all your locations in real-time. Automatically generate purchase orders when items run low.", image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=800", icon: faBoxesStacked },
+        { title: "Hardware integration", description: "Seamlessly connect with barcode scanners, receipt printers, cash drawers, and weight scales.", image: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&q=80&w=800", icon: faDesktop },
+        { title: "Online ordering", description: "Launch your online grocery store in minutes. Sync your in-store and online inventory automatically.", image: "https://images.unsplash.com/photo-1588820462211-133cd34b12aa?auto=format&fit=crop&q=80&w=800", icon: faCartShopping },
+        { title: "Employee management", description: "Track employee hours, set role-based permissions, and monitor cashier performance.", image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800", icon: faUsers },
     ];
 
     return (
@@ -35,7 +38,7 @@ export default function Features() {
                                         : 'border-transparent hover:bg-black/5 text-[var(--text-secondary)]'
                                     }`}>
                                 <div className="flex items-center gap-3 mb-1">
-                                    <i className={`fa-solid ${feature.icon} ${activeTab === index ? 'text-[var(--secondary-color)]' : 'text-gray-400'}`}></i>
+                                    <FontAwesomeIcon icon={feature.icon} className={activeTab === index ? 'text-[var(--secondary-color)]' : 'text-gray-400'} />
                                     <h3 className={`text-sm sm:text-lg font-bold ${activeTab === index ? 'text-[var(--secondary-color)]' : 'text-[var(--primary-color)]'}`}>
                                         {feature.title}
                                     </h3>
@@ -70,7 +73,7 @@ export default function Features() {
                             {/* POS sidebar overlay */}
                             <div className="absolute top-10 sm:top-12 left-0 w-48 sm:w-64 h-full bg-[var(--primary-color)]/95 backdrop-blur-md hidden md:flex flex-col p-4 text-white">
                                 <div className="text-[var(--secondary-color)] font-bold text-lg sm:text-xl mb-6 sm:mb-8 flex items-center gap-2">
-                                    <i className="fa-solid fa-store text-white"></i> MarktPOS
+                                    <FontAwesomeIcon icon={faStore} className="text-white" /> MarktPOS
                                 </div>
                                 <div className="space-y-2 sm:space-y-4">
                                     {['Checkout', 'Orders', 'Inventory', 'Customers', 'Reports'].map((item, i) => (

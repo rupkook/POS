@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStore, faBoxesStacked, faDesktop, faCartShopping, faUsers } from '@fortawesome/free-solid-svg-icons';
+
 export default function FeaturesBang() {
     const [activeTab, setActiveTab] = useState(0);
 
     const features = [
-        { title: "ইনভেন্টরি ম্যানেজমেন্ট", description: "রিয়েল-টাইমে আপনার সকল লোকেশনে স্টক লেভেল ট্র্যাক করুন। আইটেম কমে গেলে স্বয়ংক্রিয়ভাবে পার্চেজ অর্ডার তৈরি করুন।", image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=800", icon: "fa-boxes-stacked" },
-        { title: "হার্ডওয়্যার ইন্টিগ্রেশন", description: "বারকোড স্ক্যানার, রিসিট প্রিন্টার, ক্যাশ ড্রয়ার এবং ওজন পরিমাপক যন্ত্রের সাথে নির্বিঘ্নে সংযোগ করুন।", image: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&q=80&w=800", icon: "fa-desktop" },
-        { title: "অনলাইন অর্ডারিং", description: "মিনিটেই আপনার অনলাইন গ্রোসারি স্টোর চালু করুন। স্বয়ংক্রিয়ভাবে ইন-স্টোর এবং অনলাইন ইনভেন্টরি সিঙ্ক করুন।", image: "https://images.unsplash.com/photo-1588820462211-133cd34b12aa?auto=format&fit=crop&q=80&w=800", icon: "fa-cart-shopping" },
-        { title: "কর্মচারী ব্যবস্থাপনা", description: "কর্মচারীদের ঘণ্টা ট্র্যাক করুন, ভূমিকা-ভিত্তিক অনুমতি সেট করুন এবং ক্যাশিয়ারের কর্মক্ষমতা পর্যবেক্ষণ করুন।", image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800", icon: "fa-users" },
+        { title: "ইনভেন্টরি ম্যানেজমেন্ট", description: "রিয়েল-টাইমে আপনার সমস্ত লোকালয়ে স্টক লেভেল ট্র্যাক করুন। আইটেম কমে গেলে স্বয়ংক্রিয়ভাবে পার্চেজ অর্ডার তৈরি করুন।", image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=800", icon: faBoxesStacked },
+        { title: "হার্ডওয়্যার ইন্টিগ্রেশন", description: "বারকোড স্ক্যানার, রসিদ প্রিন্টার, ক্যাশ ড্রয়ার এবং ওয়েট স্কেলের সাথে নির্বিঘ্নে কানেক্ট করুন।", image: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&q=80&w=800", icon: faDesktop },
+        { title: "অনলাইন অর্ডারিং", description: "কয়েক মিনিটের মধ্যে আপনার অনলাইন মুদি দোকান চালু করুন। আপনার ইন-স্টোর এবং অনলাইন ইনভেন্টরি স্বয়ংক্রিয়ভাবে সিঙ্ক করুন।", image: "https://images.unsplash.com/photo-1588820462211-133cd34b12aa?auto=format&fit=crop&q=80&w=800", icon: faCartShopping },
+        { title: "কর্মী ব্যবস্থাপনা", description: "কর্মীদের সময় ট্র্যাক করুন, রোল-ভিত্তিক পারমিশন সেট করুন এবং ক্যাশিয়ার পারফরম্যান্স মনিটর করুন।", image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800", icon: faUsers },
     ];
 
     return (
@@ -36,7 +39,7 @@ export default function FeaturesBang() {
                                     : 'border-transparent hover:bg-black/5 text-[var(--text-secondary)]'
                                 }`}>
                                 <div className="flex items-center gap-3 mb-1">
-                                    <i className={`fa-solid ${feature.icon} ${activeTab === index ? 'text-[var(--secondary-color)]' : 'text-gray-400'}`}></i>
+                                    <FontAwesomeIcon icon={feature.icon} className={activeTab === index ? 'text-[var(--secondary-color)]' : 'text-gray-400'} />
                                     <h3 className={`text-sm sm:text-lg font-bold ${activeTab === index ? 'text-[var(--secondary-color)]' : 'text-[var(--primary-color)]'}`}>
                                         {feature.title}
                                     </h3>
@@ -71,7 +74,7 @@ export default function FeaturesBang() {
                             {/* POS sidebar overlay */}
                             <div className="absolute top-10 sm:top-12 left-0 w-48 sm:w-64 h-full bg-[var(--primary-color)]/95 backdrop-blur-md hidden md:flex flex-col p-4 text-white">
                                 <div className="text-[var(--secondary-color)] font-bold text-lg sm:text-xl mb-6 sm:mb-8 flex items-center gap-2">
-                                    <i className="fa-solid fa-store text-white"></i> MarktPOS
+                                    <FontAwesomeIcon icon={faStore} className="text-white" /> MarktPOS
                                 </div>
                                 <div className="space-y-2 sm:space-y-4">
                                     {['চেকআউট', 'অর্ডার', 'ইনভেন্টরি', 'কাস্টমার', 'রিপোর্ট'].map((item, i) => (

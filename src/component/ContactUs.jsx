@@ -6,6 +6,9 @@ import { isValidPhoneNumber } from "libphonenumber-js";
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faLinkedinIn, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 
 export default function ContactUs() {
     const navigate = useNavigate();
@@ -42,7 +45,7 @@ export default function ContactUs() {
 
     const handlePhoneChange = (value) => {
         setFormData({ ...formData, phone: value || "" });
-        
+
         const errorMsg = validateField("phone", value, formData.country);
         setErrors(prev => ({ ...prev, phone: errorMsg }));
     };
@@ -56,7 +59,7 @@ export default function ContactUs() {
             const fieldToValidate = name === 'country' ? 'phone' : name;
             const valueToValidate = name === 'country' ? formData.phone : value;
             const countryToUse = name === 'country' ? value : formData.country;
-            
+
             setErrors(prev => ({
                 ...prev,
                 [fieldToValidate]: validateField(fieldToValidate, valueToValidate, countryToUse)
@@ -141,8 +144,8 @@ export default function ContactUs() {
                     <div className="space-y-8">
                         <div>
                             <p className="text-[10px] sm:text-xs font-bold text-[var(--primary-color)]/70 uppercase tracking-[0.2em] mb-2">Electronic Mail</p>
-                            <a href="mailto:rabby0168@gmail.com" className="text-2xl sm:text-3xl font-extrabold text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors">
-                                rabby0168@gmail.com
+                            <a href="mailto:hello.naasmind@gmail.com" className="text-2xl sm:text-3xl font-extrabold text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors">
+                                hello.naasmind@gmail.com
                             </a>
                         </div>
 
@@ -156,13 +159,13 @@ export default function ContactUs() {
 
                     <div className="flex gap-4 mt-12">
                         <a href="#" className="w-12 h-12 rounded-xl border border-[var(--border-color)] bg-white shadow-sm flex items-center justify-center text-[var(--primary-color)] hover:bg-[var(--primary-color)] hover:text-white transition-all">
-                            <i className="fa-brands fa-linkedin-in text-lg"></i>
+                            <FontAwesomeIcon icon={faLinkedinIn} className="text-lg" />
                         </a>
                         <a href="#" className="w-12 h-12 rounded-xl border border-[var(--border-color)] bg-white shadow-sm flex items-center justify-center text-[var(--primary-color)] hover:bg-[var(--primary-color)] hover:text-white transition-all">
-                            <i className="fa-brands fa-instagram text-lg"></i>
+                            <FontAwesomeIcon icon={faInstagram} className="text-lg" />
                         </a>
                         <a href="#" className="w-12 h-12 rounded-xl border border-[var(--border-color)] bg-white shadow-sm flex items-center justify-center text-[var(--primary-color)] hover:bg-[var(--primary-color)] hover:text-white transition-all">
-                            <i className="fa-brands fa-twitter text-lg"></i>
+                            <FontAwesomeIcon icon={faTwitter} className="text-lg" />
                         </a>
                     </div>
                 </motion.div>
@@ -224,13 +227,10 @@ export default function ContactUs() {
                                     <textarea name="message" value={formData.message} onChange={handleChange} required rows="4" className="w-full border border-gray-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-[var(--secondary-color)] focus:ring-1 focus:ring-[var(--secondary-color)] transition-colors bg-white shadow-sm resize-none"></textarea>
                                 </div>
 
-                                <div className="flex items-start gap-3 pt-2">
-                                    <div className="flex items-center h-5">
-                                        <input type="checkbox" defaultChecked className="w-4 h-4 text-[var(--primary-color)] bg-gray-100 border-gray-300 rounded focus:ring-[var(--primary-color)] focus:ring-2 accent-[var(--primary-color)]" />
-                                    </div>
-                                </div>
+
                                 <div className="pt-4">
-                                    <button type="submit" disabled={isSubmitting} className="w-full bg-[var(--primary-color)] hover:bg-[var(--primary-dark)] text-white font-bold text-base py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed">
+                                    <button type="submit" disabled={isSubmitting} className="w-full flex justify-center items-center gap-2 bg-[var(--primary-color)] hover:bg-[var(--primary-dark)] text-white font-bold text-base py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed">
+                                        <FontAwesomeIcon icon={faPaperPlane} />
                                         {isSubmitting ? 'Sending...' : 'Send Message'}
                                     </button>
                                 </div>

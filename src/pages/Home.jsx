@@ -17,7 +17,7 @@ import ContactUs from '../component/ContactUs';
 export default function Home() {
     return (
         <motion.div 
-            className="bg-[var(--bg-color)] min-h-screen font-sans overflow-hidden"
+            className="bg-[var(--bg-color)] min-h-screen font-sans"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

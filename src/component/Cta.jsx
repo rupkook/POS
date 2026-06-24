@@ -2,6 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+
 export default function Cta() {
     const images = [
         { src: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=400", alt: "Produce" },
@@ -29,9 +32,9 @@ export default function Cta() {
                             Get a free demo
                         </Link>
                         <div className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-2 text-white/80 text-xs sm:text-sm">
-                            <span><i className="fa-solid fa-check-circle text-white mr-1"></i> No credit card required</span>
+                            <span><FontAwesomeIcon icon={faCheckCircle} className="text-white mr-1" /> No credit card required</span>
                             <span>•</span>
-                            <span><i className="fa-solid fa-check-circle text-white mr-1"></i> Setup in 48 hours</span>
+                            <span><FontAwesomeIcon icon={faCheckCircle} className="text-white mr-1" /> Setup in 48 hours</span>
                         </div>
                     </motion.div>
 

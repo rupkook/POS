@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import axios from 'axios';
-import { Mail, Target, CalendarDays, Search, RefreshCcw, Eye, Trash2, X, ChevronLeft, ChevronRight, Menu } from 'lucide-react';
+import axiosInstance from '../../utils/axiosInstance';
+import { Search, X, Menu } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import SEO from '../SEO';
+import Sidebar from './Sidebar';
+import Cards from './Cards';
+import Table from './Table';
 
 export default function DashboardAdmin() {
     const [activeTab, setActiveTab] = useState('contacts');
@@ -13,6 +16,7 @@ export default function DashboardAdmin() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedMessage, setSelectedMessage] = useState(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
 
     // Pagination states
     const [currentPage, setCurrentPage] = useState(1);
@@ -25,14 +29,17 @@ export default function DashboardAdmin() {
 
     useEffect(() => {
         fetchData();
+        const handleScroll = () => setScrolled(window.scrollY > 20);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     const fetchData = async () => {
         setLoading(true);
         try {
             const [contactRes, demoRes] = await Promise.all([
-                axios.get('http://localhost:5000/api/contact'),
-                axios.get('http://localhost:5000/api/demo'),
+                axiosInstance.get('/contact'),
+                axiosInstance.get('/demo'),
             ]);
             setContacts(contactRes.data.data || []);
             setDemos(demoRes.data.data || []);
@@ -49,10 +56,10 @@ export default function DashboardAdmin() {
 
         try {
             if (type === 'contacts') {
-                await axios.delete(`http://localhost:5000/api/contact/${id}`);
+                await axiosInstance.delete(`/contact/${id}`);
                 setContacts(prev => prev.filter(item => item._id !== id));
             } else {
-                await axios.delete(`http://localhost:5000/api/demo/${id}`);
+                await axiosInstance.delete(`/demo/${id}`);
                 setDemos(prev => prev.filter(item => item._id !== id));
             }
             toast.success("Deleted successfully!");
@@ -86,11 +93,7 @@ export default function DashboardAdmin() {
     const currentContacts = filteredContacts.slice(indexOfFirstItem, indexOfLastItem);
     const currentDemos = filteredDemos.slice(indexOfFirstItem, indexOfLastItem);
 
-    const stats = [
-        { label: 'Total Contacts', value: contacts.length, icon: <Mail size={24} color="#ff4810" />, color: '#ff4810' },
-        { label: 'Demo Requests', value: demos.length, icon: <Target size={24} color="#143d25" />, color: '#143d25' },
-        { label: 'This Month', value: contacts.filter(c => new Date(c.createdAt).getMonth() === new Date().getMonth()).length + demos.filter(d => new Date(d.createdAt).getMonth() === new Date().getMonth()).length, icon: <CalendarDays size={24} color="#1f5c38" />, color: '#1f5c38' },
-    ];
+
 
     return (
         <div className="min-h-screen bg-[var(--bg-color)]">
@@ -108,45 +111,19 @@ export default function DashboardAdmin() {
             </AnimatePresence>
 
             {/* Sidebar */}
-            <aside className={`fixed top-0 left-0 w-[260px] h-[100%] flex flex-col z-50 admin-sidebar transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
-                <div className="flex justify-between items-center px-6 py-7 border-b border-white/10">
-                    <div>
-                        <h1 className="text-white text-[22px] font-extrabold m-0 tracking-tight">
-                            <span className="text-[var(--secondary-color)]">Markt</span> POS
-                        </h1>
-                        <p className="text-white/50 text-[11px] mt-1 uppercase tracking-widest font-semibold">Admin Panel</p>
-                    </div>
-                    <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-white/50 hover:text-white cursor-pointer">
-                        <X size={20} />
-                    </button>
-                </div>
-
-                <nav className="flex-1 px-3 py-5">
-                    {[
-                        { id: 'contacts', label: 'Contact Messages', icon: <Mail size={20} /> },
-                        { id: 'demos', label: 'Demo Requests', icon: <Target size={20} /> },
-                    ].map(tab => (
-                        <button key={tab.id} onClick={() => { setActiveTab(tab.id); setIsSidebarOpen(false); }}
-                            className={`admin-nav-btn flex items-center gap-3 w-full px-4 py-3.5 mb-1 rounded-xl border-none cursor-pointer text-sm font-semibold ${activeTab === tab.id ? 'active' : 'inactive'}`}
-                        >
-                            <span>{tab.icon}</span>
-                            {tab.label}
-                        </button>
-                    ))}
-                </nav>
-
-                <div className="px-6 py-5 border-t border-white/10">
-                    <button onClick={fetchData} className="admin-refresh-btn flex items-center justify-center gap-2 w-full p-3 rounded-xl border border-white/15 text-white/70 cursor-pointer text-[13px] font-semibold bg-[rgba(255,255,255,0.05)] hover:text-white transition-colors">
-                        <RefreshCcw size={16} /> Refresh Data
-                    </button>
-                </div>
-            </aside>
+            <Sidebar 
+                isSidebarOpen={isSidebarOpen} 
+                setIsSidebarOpen={setIsSidebarOpen} 
+                activeTab={activeTab} 
+                setActiveTab={setActiveTab} 
+                fetchData={fetchData} 
+            />
 
             {/* Main Content */}
             <main className="ml-0 lg:ml-[260px] py-6 sm:py-8 px-4 sm:px-10 transition-all duration-300">
 
                 {/* Header */}
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 mb-8">
+                <div className={`sticky top-0 z-30 -mx-4 sm:-mx-10 px-4 sm:px-10 py-4 sm:py-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 mb-8 transition-all duration-300 ${scrolled ? 'bg-[var(--bg-color)]/90 backdrop-blur-md border-b border-[var(--border-color)] shadow-sm' : 'bg-transparent border-transparent'}`}>
                     <div className="flex items-center gap-3">
                         <button onClick={() => setIsSidebarOpen(true)} className="lg:hidden p-2 rounded-xl border border-[var(--border-color)] bg-white text-[var(--primary-color)] shadow-sm cursor-pointer">
                             <Menu size={20} />
@@ -171,135 +148,24 @@ export default function DashboardAdmin() {
                 </div>
 
                 {/* Stats Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mb-8">
-                    {stats.map((stat, i) => (
-                        <motion.div key={i}
-                            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: i * 0.1, duration: 0.4 }}
-                            className="bg-white rounded-2xl px-7 py-6 border border-[var(--border-color)] shadow-sm"
-                        >
-                            <div className="flex justify-between items-center">
-                                <div>
-                                    <p className="text-[var(--text-secondary)] text-[13px] font-semibold m-0 uppercase tracking-wide">{stat.label}</p>
-                                    <p className="text-[var(--primary-color)] text-4xl font-extrabold mt-2 tracking-tighter">{stat.value}</p>
-                                </div>
-                                <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: `${stat.color}15` }}>
-                                    {stat.icon}
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
+                <Cards contacts={contacts} demos={demos} />
 
                 {/* Table Area */}
-                {loading ? (
-                    <div className="text-center py-20 text-[var(--text-secondary)] text-base font-semibold flex flex-col items-center">
-                        <RefreshCcw size={40} className="animate-spin opacity-50 mb-4 text-[var(--primary-color)]" />
-                        Loading data...
-                    </div>
-                ) : (
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.3 }}
-                        className="bg-white rounded-2xl border border-[var(--border-color)] overflow-hidden shadow-sm flex flex-col"
-                    >
-                        <div className="overflow-x-auto">
-                            {activeTab === 'contacts' ? (
-                                <table className="w-full border-collapse min-w-[1000px]">
-                                    <thead>
-                                        <tr className="bg-[var(--bg-light)]">
-                                            {['#', 'Name', 'Email', 'Phone', 'Country', 'Date', 'Actions'].map(h => (
-                                                <th key={h} className={`py-3.5 px-5 text-left text-[11px] font-bold text-[var(--primary-color)] uppercase tracking-wider border-b border-[var(--border-color)] ${h === 'Actions' ? 'text-right' : ''}`}>{h}</th>
-                                            ))}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {currentContacts.length === 0 ? (
-                                            <tr><td colSpan={7} className="text-center py-12 text-[var(--text-secondary)] text-sm">No contacts found.</td></tr>
-                                        ) : currentContacts.map((c, i) => (
-                                            <tr key={c._id} className="admin-table-row cursor-default">
-                                                <td className="py-3.5 px-5 text-[13px] text-[var(--text-secondary)] font-semibold">{indexOfFirstItem + i + 1}</td>
-                                                <td className="py-3.5 px-5 text-sm font-semibold text-[var(--primary-color)]">{c.firstName} {c.lastName}</td>
-                                                <td className="py-3.5 px-5 text-[13px] text-[var(--text-secondary)]">{c.email}</td>
-                                                <td className="py-3.5 px-5 text-[13px] text-[var(--text-secondary)]">{c.phone}</td>
-                                                <td className="py-3.5 px-5">
-                                                    <span className="inline-block py-1 px-2.5 rounded-md bg-[#E8FAAA] text-[var(--primary-color)] text-[11px] font-bold uppercase">{c.country}</span>
-                                                </td>
-                                                <td className="py-3.5 px-5 text-xs text-[var(--text-secondary)]">{formatDate(c.createdAt)}</td>
-                                                <td className="py-3.5 px-5 flex justify-end gap-2">
-                                                    <button onClick={() => setSelectedMessage(c)}
-                                                        className="admin-btn-view py-1.5 px-3 rounded-lg border border-[var(--border-color)] bg-white cursor-pointer flex items-center gap-1.5 text-xs font-semibold text-[var(--primary-color)]"
-                                                    ><Eye size={14} /> View</button>
-                                                    <button onClick={() => handleDelete(c._id, 'contacts')}
-                                                        className="admin-btn-view py-1.5 px-3 rounded-lg border border-[var(--border-color)] bg-white cursor-pointer flex items-center gap-1.5 text-xs font-semibold text-red-600 hover:!bg-red-50 hover:!border-red-200 transition-colors"
-                                                    ><Trash2 size={14} /> Delete</button>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            ) : (
-                                <table className="w-full border-collapse min-w-[1000px]">
-                                    <thead>
-                                        <tr className="bg-[var(--bg-light)]">
-                                            {['#', 'Company', 'Name', 'Email', 'Phone', 'Country', 'Date', 'Actions'].map(h => (
-                                                <th key={h} className={`py-3.5 px-5 text-left text-[11px] font-bold text-[var(--primary-color)] uppercase tracking-wider border-b border-[var(--border-color)] ${h === 'Actions' ? 'text-right' : ''}`}>{h}</th>
-                                            ))}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {currentDemos.length === 0 ? (
-                                            <tr><td colSpan={8} className="text-center py-12 text-[var(--text-secondary)] text-sm">No demo requests found.</td></tr>
-                                        ) : currentDemos.map((d, i) => (
-                                            <tr key={d._id} className="admin-table-row cursor-default">
-                                                <td className="py-3.5 px-5 text-[13px] text-[var(--text-secondary)] font-semibold">{indexOfFirstItem + i + 1}</td>
-                                                <td className="py-3.5 px-5 text-sm font-bold text-[var(--primary-color)]">{d.companyName}</td>
-                                                <td className="py-3.5 px-5 text-sm font-semibold text-[var(--primary-color)]">{d.firstName} {d.lastName}</td>
-                                                <td className="py-3.5 px-5 text-[13px] text-[var(--text-secondary)]">{d.email}</td>
-                                                <td className="py-3.5 px-5 text-[13px] text-[var(--text-secondary)]">{d.phone}</td>
-                                                <td className="py-3.5 px-5">
-                                                    <span className="inline-block py-1 px-2.5 rounded-md bg-[#E8FAAA] text-[var(--primary-color)] text-[11px] font-bold uppercase">{d.country}</span>
-                                                </td>
-                                                <td className="py-3.5 px-5 text-xs text-[var(--text-secondary)]">{formatDate(d.createdAt)}</td>
-                                                <td className="py-3.5 px-5 flex justify-end gap-2">
-                                                    <button onClick={() => handleDelete(d._id, 'demos')}
-                                                        className="admin-btn-view py-1.5 px-3 rounded-lg border border-[var(--border-color)] bg-white cursor-pointer flex items-center gap-1.5 text-xs font-semibold text-red-600 hover:!bg-red-50 hover:!border-red-200 transition-colors"
-                                                    ><Trash2 size={14} /> Delete</button>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            )}
-                        </div>
-
-                        {/* Pagination Controls */}
-                        {activeData.length > 0 && (
-                            <div className="flex justify-between flex-wrap gap-[20px] items-center px-6 py-4 border-t border-[var(--border-color)] bg-white mt-auto">
-                                <p className="text-[13px] text-[var(--text-secondary)] font-medium m-0">
-                                    Showing <span className="font-bold text-[var(--primary-color)]">{indexOfFirstItem + 1}</span> to <span className="font-bold text-[var(--primary-color)]">{Math.min(indexOfLastItem, activeData.length)}</span> of <span className="font-bold text-[var(--primary-color)]">{activeData.length}</span> entries
-                                </p>
-                                <div className="flex items-center gap-2">
-                                    <button
-                                        onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                                        disabled={currentPage === 1}
-                                        className="p-1.5 rounded-lg border border-[var(--border-color)] hover:bg-[var(--bg-light)] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition-colors text-[var(--primary-color)]"
-                                    ><ChevronLeft size={18} /></button>
-
-                                    <span className="text-[13px] font-bold text-[var(--primary-color)] min-w-[30px] text-center bg-[var(--bg-light)] py-1 px-3 rounded-md">
-                                        {currentPage} / {totalPages}
-                                    </span>
-
-                                    <button
-                                        onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                                        disabled={currentPage === totalPages}
-                                        className="p-1.5 rounded-lg border border-[var(--border-color)] hover:bg-[var(--bg-light)] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition-colors text-[var(--primary-color)]"
-                                    ><ChevronRight size={18} /></button>
-                                </div>
-                            </div>
-                        )}
-                    </motion.div>
-                )}
+                <Table 
+                    loading={loading}
+                    activeTab={activeTab}
+                    currentContacts={currentContacts}
+                    currentDemos={currentDemos}
+                    indexOfFirstItem={indexOfFirstItem}
+                    indexOfLastItem={indexOfLastItem}
+                    activeData={activeData}
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    setCurrentPage={setCurrentPage}
+                    handleDelete={handleDelete}
+                    setSelectedMessage={setSelectedMessage}
+                    formatDate={formatDate}
+                />
             </main>
 
             {/* Message Modal */}

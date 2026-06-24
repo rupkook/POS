@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeftLong, faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
+
 export default function HeaderBang() {
     const [scrolled, setScrolled] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -33,7 +36,9 @@ export default function HeaderBang() {
                     <div className="flex items-center gap-3 sm:gap-4">
                         {isSpecialPage ? (
                             <div className="flex items-center gap-4">
-                                <i className="text-[var(--secondary-color)] fa-solid fa-arrow-left-long group-hover:-translate-x-1 transition-transform"></i>
+                                <div>
+                                    <FontAwesomeIcon icon={faArrowLeftLong} className="text-[var(--secondary-color)] group-hover:-translate-x-1 transition-transform" />
+                                </div>
                                 <Link to="/bn" className="flex items-center gap-2 bg-[var(--secondary-color)] hover:bg-[var(--secondary-dark)] text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm font-bold transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 group">
                                     হোমে ফিরে যান
                                 </Link>
@@ -44,7 +49,9 @@ export default function HeaderBang() {
                                 <Link to="/bn/demo" className="flex items-center gap-2 bg-[var(--secondary-color)] hover:bg-[var(--secondary-dark)] text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm font-bold transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 group">
                                     ডেমো নিন
                                 </Link>
-                                <i className="text-[var(--secondary-color)] fa-solid fa-arrow-right-long text-xs"></i>
+                                <div>
+                                    <FontAwesomeIcon icon={faArrowRightLong} className="text-[var(--secondary-color)] text-xs" />
+                                </div>
                             </div>
                         )}
                     </div>

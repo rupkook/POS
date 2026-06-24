@@ -4,6 +4,9 @@ import { useState } from 'react';
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLinkedinIn, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
+
 export default function ContactUsBang() {
     const navigate = useNavigate();
     const [phone, setPhone] = useState('');
@@ -54,13 +57,13 @@ export default function ContactUsBang() {
 
                     <div className="flex gap-4 mt-12">
                         <Link to="#" className="w-12 h-12 rounded-xl border border-[var(--border-color)] bg-white shadow-sm flex items-center justify-center text-[var(--primary-color)] hover:bg-[var(--primary-color)] hover:text-white transition-all">
-                            <i className="fa-brands fa-linkedin-in text-lg"></i>
+                            <FontAwesomeIcon icon={faLinkedinIn} className="text-lg" />
                         </Link>
                         <Link to="#" className="w-12 h-12 rounded-xl border border-[var(--border-color)] bg-white shadow-sm flex items-center justify-center text-[var(--primary-color)] hover:bg-[var(--primary-color)] hover:text-white transition-all">
-                            <i className="fa-brands fa-instagram text-lg"></i>
+                            <FontAwesomeIcon icon={faInstagram} className="text-lg" />
                         </Link>
                         <Link to="#" className="w-12 h-12 rounded-xl border border-[var(--border-color)] bg-white shadow-sm flex items-center justify-center text-[var(--primary-color)] hover:bg-[var(--primary-color)] hover:text-white transition-all">
-                            <i className="fa-brands fa-twitter text-lg"></i>
+                            <FontAwesomeIcon icon={faTwitter} className="text-lg" />
                         </Link>
                     </div>
                 </motion.div>
@@ -119,11 +122,7 @@ export default function ContactUsBang() {
                                     <textarea rows="4" className="w-full border border-gray-200 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-[var(--secondary-color)] focus:ring-1 focus:ring-[var(--secondary-color)] transition-colors bg-white shadow-sm resize-none"></textarea>
                                 </div>
 
-                                <div className="flex items-start gap-3 pt-2">
-                                    <div className="flex items-center h-5">
-                                        <input type="checkbox" defaultChecked className="w-4 h-4 text-[var(--primary-color)] bg-gray-100 border-gray-300 rounded focus:ring-[var(--primary-color)] focus:ring-2 accent-[var(--primary-color)]" />
-                                    </div>
-                                </div>
+
                                 <div className="pt-4">
                                     <button type="button" className="w-full bg-[var(--primary-color)] hover:bg-[var(--primary-dark)] text-white font-bold text-base py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                                         বার্তা পাঠান

@@ -2,6 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+
 export default function CtaBang() {
     const images = [
         { src: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=400", alt: "শাকসবজি" },
@@ -29,9 +32,9 @@ export default function CtaBang() {
                             ফ্রি ডেমো নিন
                         </Link>
                         <div className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-2 text-white/80 text-xs sm:text-sm">
-                            <span><i className="fa-solid fa-check-circle text-white mr-1"></i> ক্রেডিট কার্ড প্রয়োজন নেই</span>
+                            <span><FontAwesomeIcon icon={faCheckCircle} className="text-white mr-1" /> ক্রেডিট কার্ড প্রয়োজন নেই</span>
                             <span>•</span>
-                            <span><i className="fa-solid fa-check-circle text-white mr-1"></i> ৪৮ ঘণ্টায় সেটআপ</span>
+                            <span><FontAwesomeIcon icon={faCheckCircle} className="text-white mr-1" /> ৪৮ ঘণ্টায় সেটআপ</span>
                         </div>
                     </motion.div>
 

@@ -14,7 +14,12 @@
     --text-primary: #143d25;
     --text-secondary: #5c665e;
     --border-color: #e5e3d8;
+    --card-bg: #ffffff;
+    --card-shadow: 0 8px 30px rgb(0, 0, 0, 0.04);
+    --input-bg: transparent;
 }
+
+
 
 * {
     box-sizing: border-box;
@@ -28,7 +33,9 @@ html {
 body {
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 ul,

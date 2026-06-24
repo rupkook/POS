@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+
 export default function FaqBang() {
     const [openIndex, setOpenIndex] = useState(0);
 
@@ -32,7 +35,7 @@ export default function FaqBang() {
                                     {faq.question}
                                 </span>
                                 <div className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-transform duration-300 ${openIndex === index ? 'bg-[var(--secondary-color)]/10 text-[var(--secondary-color)] rotate-180' : 'bg-gray-100 text-gray-500'}`}>
-                                    <i className="fa-solid fa-chevron-down text-xs sm:text-sm"></i>
+                                    <FontAwesomeIcon icon={faChevronDown} className="text-xs sm:text-sm" />
                                 </div>
                             </button>
                             <AnimatePresence>
